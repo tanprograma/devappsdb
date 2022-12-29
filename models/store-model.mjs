@@ -8,36 +8,28 @@ import myLibrary from "../libraries/pms-library.mjs";
 
 import mongoose from "mongoose";
 
-const dispensedSchema = new mongoose.Schema({
-  date: {
-    type: Date,
-    default: function () {
-      return new Date();
-    },
+const storeSchema = new mongoose.Schema({
+  store: {
+    type: String,
+    required: true,
+    lowercase: true,
   },
-
-  medications: [
-    {
-      medicine: String,
-      quantity: Number,
-    },
-  ],
 });
 
 // static methods
 // create a debug message..called jawabu
-dispensedSchema.statics.jawabu = myLibrary.jawabu;
-dispensedSchema.statics.create = myLibrary.createDocument;
-dispensedSchema.statics.readAll = myLibrary.readAllDocuments;
-dispensedSchema.statics.readAllOfKind = myLibrary.readAllDocumentsOfKind;
-dispensedSchema.statics.readOne = myLibrary.readDocument;
-dispensedSchema.statics.deleteAll = myLibrary.deleteAllDocuments;
-dispensedSchema.statics.deleteAllOfKind = myLibrary.deleteAllDocumentsOfKind;
-dispensedSchema.statics.deleteOne = myLibrary.deleteDocument;
-dispensedSchema.statics.updateQuantity = myLibrary.updateQuantity;
-dispensedSchema.statics.updateUnit = myLibrary.updateUnit;
+storeSchema.statics.jawabu = myLibrary.jawabu;
+storeSchema.statics.create = myLibrary.createDocument;
+storeSchema.statics.readAll = myLibrary.readAllDocuments;
+storeSchema.statics.readAllOfKind = myLibrary.readAllDocumentsOfKind;
+storeSchema.statics.readOne = myLibrary.readDocument;
+storeSchema.statics.deleteAll = myLibrary.deleteAllDocuments;
+storeSchema.statics.deleteAllOfKind = myLibrary.deleteAllDocumentsOfKind;
+storeSchema.statics.deleteOne = myLibrary.deleteDocument;
+storeSchema.statics.updateQuantity = myLibrary.updateQuantity;
+storeSchema.statics.updateUnit = myLibrary.updateUnit;
 // ends here
-// dispensedSchema.statics.dispense = async function (req, Model) {
+// storeSchema.statics.dispense = async function (req, Model) {
 //   const quantityUpdated = await this.updateQuantitySubtract(req);
 //   const refillTransactionCreated = await this.createDispenseTransaction(
 //     req,
@@ -45,7 +37,7 @@ dispensedSchema.statics.updateUnit = myLibrary.updateUnit;
 //   );
 //   return result;
 // };
-// dispensedSchema.statics.updateQuantitySubtract = async function (req) {
+// storeSchema.statics.updateQuantitySubtract = async function (req) {
 //   let { dispenseQuantity, genericName } = req;
 
 //   // x;
@@ -58,7 +50,7 @@ dispensedSchema.statics.updateUnit = myLibrary.updateUnit;
 
 //   return true;
 // };
-// dispensedSchema.statics.createDispenseTransaction = async function (req, Model) {
+// storeSchema.statics.createDispenseTransaction = async function (req, Model) {
 //   let {
 //     dispenseQuantity,
 //     patient,
@@ -89,7 +81,7 @@ dispensedSchema.statics.updateUnit = myLibrary.updateUnit;
 //   // return savedDispenseRecord;
 // };
 
-// dispensedSchema.statics.refill = async function (req, Model) {
+// storeSchema.statics.refill = async function (req, Model) {
 //   try {
 //     const quantityUpdated = await this.updateQuantityAdd(req);
 //     if (!quantityUpdated)
@@ -123,7 +115,7 @@ dispensedSchema.statics.updateUnit = myLibrary.updateUnit;
 //   } catch (error) {}
 // };
 // // does the updatting of refill docs
-// dispensedSchema.statics.createRefillTransaction = async function (req, Model) {
+// storeSchema.statics.createRefillTransaction = async function (req, Model) {
 //   let {
 //     refillQuantity,
 //     supplier,
@@ -155,14 +147,14 @@ dispensedSchema.statics.updateUnit = myLibrary.updateUnit;
 //     return false;
 //   }
 // };
-// dispensedSchema.statics.updateQuantityAdd = async function (req) {
+// storeSchema.statics.updateQuantityAdd = async function (req) {
 //   const queryCondition = { "generic-name": new RegExp(genericName, "i") };
 //   const query = await this.findOne(queryCondition);
 
 //   return true;
 // };
 
-// dispensedSchema.statics.updateExpiryDate = async function (req) {
+// storeSchema.statics.updateExpiryDate = async function (req) {
 //   let { expiryDate } = req;
 
 //   const queryCondition = { "generic-name": genericName };
@@ -173,6 +165,6 @@ dispensedSchema.statics.updateUnit = myLibrary.updateUnit;
 //   return true;
 // };
 
-const DispensedModel = mongoose.model("Dispensed", dispensedSchema);
+const StoreModel = mongoose.model("Stores", storeSchema);
 
-export default DispensedModel;
+export default StoreModel;

@@ -1,4 +1,4 @@
-import unitsModel from "../models/units-model.mjs";
+import InventoryModel from "../models/inventory-model.mjs";
 import database from "../database.mjs";
 import _ from "lodash";
 import express from "express";
@@ -9,38 +9,62 @@ router.use(express.urlencoded({ extended: true }));
 // const db = "PMS";
 // database(db);
 
-router.post("/", async (req, res) => {
-  const product = await unitsModel.create(req.body);
+router.post("/create", async (req, res) => {
+  const product = await InventoryModel.create(req.body);
   if (!product.isSuccessful) return product.error.message;
-  // result = _.pick(product.result, ["type", "medicine", "unit", "quantity"]);
   const result = product.result;
-  // res.header({ "Access-Control-Allow-Origin": "*" });
-  res.send(result);
-});
-router.patch("/", async (req, res) => {
-  const product = await unitsModel.findOne({ _id: req.body._id });
-  product.unit = req.body.unit;
-  const result = await product.save();
   // if (!product.isSuccessful) return product.error.message;
-
-  // const result = product.result;
+  // const result = _.pick(product.result, ["type", "product", "unit", "quantity"]);
 
   res.send(result);
 });
 
-router.get("/", async (req, res) => {
-  const products = await unitsModel.readAll();
-  if (!products.isSuccessful) return products.error.message;
-  // map objects to lodash objects and send
+router.get("/allstores", async (req, res) => {
+  const result = await InventoryModel.find();
+  // if (!products.isSuccessful) return products.error.message;
+  // // map objects to lodash objects and send
+  // const result = products.result;
   // result = products.result.map((item) => {
   //   return _.pick(item, ["type", "product", "unit", "quantity"]);
   // });
-  const result = products.result;
+  res.send(result);
+});
+router.get("/allstores/:commodity", async (req, res) => {
+  const result = await InventoryModel.find({ commodity: req.params.commodity });
+  // if (!products.isSuccessful) return products.error.message;
+  // // map objects to lodash objects and send
+  // const result = products.result;
+  // result = products.result.map((item) => {
+  //   return _.pick(item, ["type", "product", "unit", "quantity"]);
+  // });
+  res.send(result);
+});
+router.get("/stores/:store", async (req, res) => {
+  const result = await InventoryModel.find({ store: req.params.store });
+  // if (!products.isSuccessful) return products.error.message;
+  // // map objects to lodash objects and send
+  // const result = products.result;
+  // result = products.result.map((item) => {
+  //   return _.pick(item, ["type", "product", "unit", "quantity"]);
+  // });
+  res.send(result);
+});
+router.get("/stores/:store/:commodity", async (req, res) => {
+  const result = await InventoryModel.findOne({
+    store: req.params.store,
+    commodity: req.params.store,
+  });
+  // if (!products.isSuccessful) return products.error.message;
+  // // map objects to lodash objects and send
+  // const result = products.result;
+  // result = products.result.map((item) => {
+  //   return _.pick(item, ["type", "product", "unit", "quantity"]);
+  // });
   res.send(result);
 });
 // router.post("/read-all-of-kind", async (req, res) => {
 //   if (req.body === {}) return { error: "request body empty" };
-//   const products = await unitsModel.readAllOfKind(req.body);
+//   const products = await InventoryModel.readAllOfKind(req.body);
 //   if (!products.isSuccessful) return products.error.message;
 //   // map objects to lodash objects and send
 //   result = products.result.map((item) => {
@@ -49,7 +73,7 @@ router.get("/", async (req, res) => {
 //   res.send(result);
 // });
 // router.post("/read-one", async (req, res) => {
-//   const product = await unitsModel.readOne(req.body);
+//   const product = await InventoryModel.readOne(req.body);
 //   if (!product.isSuccessful) return product.error.message;
 //   // map objects to lodash objects and send
 //   result = _.pick(product.result, ["type", "product", "unit", "quantity"]);
@@ -63,8 +87,8 @@ router.get("/", async (req, res) => {
 //     "quantity-3": quantity,
 //     "unit-3": unit,
 //   } = req.body;
-//   await unitsModel.updateQuantity({ product, quantity });
-//   const results = await unitsModel.updateUnit({ product, unit });
+//   await InventoryModel.updateQuantity({ product, quantity });
+//   const results = await InventoryModel.updateUnit({ product, unit });
 //   if (!results.isSuccessful) return results.error.message;
 //   // map objects to lodash objects and send
 //   const result = _.pick(results.result, [
@@ -78,7 +102,7 @@ router.get("/", async (req, res) => {
 // });
 // router.post("/update-quantity", async (req, res) => {
 //   const { "product-2": product, quantity } = req.body;
-//   const results = await unitsModel.updateQuantity({ product, quantity });
+//   const results = await InventoryModel.updateQuantity({ product, quantity });
 //   if (!results.isSuccessful) return results.error.message;
 //   // map objects to lodash objects and send
 //   const result = _.pick(results.result, [
@@ -92,7 +116,7 @@ router.get("/", async (req, res) => {
 // });
 // router.post("/update-unit", async (req, res) => {
 //   const { "product-1": product, unit } = req.body;
-//   const results = await unitsModel.updateUnit({ product, unit });
+//   const results = await InventoryModel.updateUnit({ product, unit });
 //   if (!results.isSuccessful) return results.error.message;
 //   // map objects to lodash objects and send
 //   const result = _.pick(results.result, [
@@ -106,17 +130,17 @@ router.get("/", async (req, res) => {
 // });
 
 // router.post("/delete-one", async (req, res) => {
-//   const product = await unitsModel.deleteOne(req.body);
+//   const product = await InventoryModel.deleteOne(req.body);
 //   if (!product.isSuccessful) return product.error.message;
 //   res.send(product.result);
 // });
 // router.post("/delete-all-of-kind", async (req, res) => {
-//   const products = await unitsModel.deleteAllOfKind(req.body);
+//   const products = await InventoryModel.deleteAllOfKind(req.body);
 //   if (!products.isSuccessful) return products.error.message;
 //   res.send(products.result);
 // });
 // router.post("/delete-all", async (req, res) => {
-//   const products = await unitsModel.deleteAll();
+//   const products = await InventoryModel.deleteAll();
 //   if (!products.isSuccessful) return products.error.message;
 //   res.send(products.result);
 // });

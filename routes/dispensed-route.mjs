@@ -1,4 +1,4 @@
-import DispensedModel from "../models/dispensed-model.mjs";
+import Model from "../models/transaction-model.mjs";
 import database from "../database.mjs";
 import _ from "lodash";
 import express from "express";
@@ -6,11 +6,11 @@ const router = express.Router();
 router.use(express.json());
 // router.use(express.static("public"));
 router.use(express.urlencoded({ extended: true }));
-const db = "PMS";
-database(db);
+// const db = "PMS";
+// database(db);
 
 router.post("/", async (req, res) => {
-  const product = await DispensedModel.create(req.body);
+  const product = await Model.DispensedModel.create(req.body);
   if (!product.isSuccessful) return product.error.message;
   const result = product.result;
   // if (!product.isSuccessful) return product.error.message;
@@ -20,15 +20,26 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  const products = await DispensedModel.readAll();
-  if (!products.isSuccessful) return products.error.message;
-  // map objects to lodash objects and send
-  const result = products.result;
-  // result = products.result.map((item) => {
-  //   return _.pick(item, ["type", "product", "unit", "quantity"]);
-  // });
+  const result = await Model.DispensedModel.find().populate({
+    path: "commodities",
+    populate: { path: "commodity" },
+  });
+
   res.send(result);
 });
+// router.get("/", async (req, res) => {
+//   const result = await Model.DispensedModel.find().populate({
+//     path: "medications",
+//     populate: { path: "unit" },
+//   });
+//   // if (!products.isSuccessful) return products.error.message;
+//   // // map objects to lodash objects and send
+//   // const result = products.result;
+//   // result = products.result.map((item) => {
+//   //   return _.pick(item, ["type", "product", "unit", "quantity"]);
+//   // });
+//   res.send(result);
+// });
 // router.post("/read-all-of-kind", async (req, res) => {
 //   if (req.body === {}) return { error: "request body empty" };
 //   const products = await DispensedModel.readAllOfKind(req.body);

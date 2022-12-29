@@ -8,29 +8,35 @@ import myLibrary from "../libraries/pms-library.mjs";
 
 import mongoose from "mongoose";
 
-const medicineSchema = new mongoose.Schema({
-  medicine: {
+const commoditySchema = new mongoose.Schema({
+  commodity: {
     type: String,
     minlength: 3,
     required: true,
     lowercase: true,
   },
+  units: [
+    {
+      unit: { type: mongoose.Schema.Types.ObjectId, ref: "Units" },
+      value: Number,
+    },
+  ],
 });
 
 // static methods
 // create a debug message..called jawabu
-medicineSchema.statics.jawabu = myLibrary.jawabu;
-medicineSchema.statics.create = myLibrary.createDocument;
-medicineSchema.statics.readAll = myLibrary.readAllDocuments;
-medicineSchema.statics.readAllOfKind = myLibrary.readAllDocumentsOfKind;
-medicineSchema.statics.readOne = myLibrary.readDocument;
-medicineSchema.statics.deleteAll = myLibrary.deleteAllDocuments;
-medicineSchema.statics.deleteAllOfKind = myLibrary.deleteAllDocumentsOfKind;
-medicineSchema.statics.deleteOne = myLibrary.deleteDocument;
-medicineSchema.statics.updateQuantity = myLibrary.updateQuantity;
-medicineSchema.statics.updateUnit = myLibrary.updateUnit;
+commoditySchema.statics.jawabu = myLibrary.jawabu;
+commoditySchema.statics.create = myLibrary.createDocument;
+commoditySchema.statics.readAll = myLibrary.readAllDocuments;
+commoditySchema.statics.readAllOfKind = myLibrary.readAllDocumentsOfKind;
+commoditySchema.statics.readOne = myLibrary.readDocument;
+commoditySchema.statics.deleteAll = myLibrary.deleteAllDocuments;
+commoditySchema.statics.deleteAllOfKind = myLibrary.deleteAllDocumentsOfKind;
+commoditySchema.statics.deleteOne = myLibrary.deleteDocument;
+commoditySchema.statics.updateQuantity = myLibrary.updateQuantity;
+commoditySchema.statics.updateUnit = myLibrary.updateUnit;
 // ends here
-// medicineSchema.statics.dispense = async function (req, Model) {
+// commoditySchema.statics.dispense = async function (req, Model) {
 //   const quantityUpdated = await this.updateQuantitySubtract(req);
 //   const refillTransactionCreated = await this.createDispenseTransaction(
 //     req,
@@ -38,11 +44,11 @@ medicineSchema.statics.updateUnit = myLibrary.updateUnit;
 //   );
 //   return result;
 // };
-// medicineSchema.statics.updateQuantitySubtract = async function (req) {
+// commoditySchema.statics.updateQuantitySubtract = async function (req) {
 //   let { dispenseQuantity, genericName } = req;
 
 //   // x;
-//   // update medicine quantity and expiry date
+//   // update commodity quantity and expiry date
 //   const queryCondition = { "generic-name": genericName };
 //   const query = await this.findOne(queryCondition);
 //   // update quantity and expiry
@@ -51,7 +57,7 @@ medicineSchema.statics.updateUnit = myLibrary.updateUnit;
 
 //   return true;
 // };
-// medicineSchema.statics.createDispenseTransaction = async function (req, Model) {
+// commoditySchema.statics.createDispenseTransaction = async function (req, Model) {
 //   let {
 //     dispenseQuantity,
 //     patient,
@@ -82,7 +88,7 @@ medicineSchema.statics.updateUnit = myLibrary.updateUnit;
 //   // return savedDispenseRecord;
 // };
 
-// medicineSchema.statics.refill = async function (req, Model) {
+// commoditySchema.statics.refill = async function (req, Model) {
 //   try {
 //     const quantityUpdated = await this.updateQuantityAdd(req);
 //     if (!quantityUpdated)
@@ -116,7 +122,7 @@ medicineSchema.statics.updateUnit = myLibrary.updateUnit;
 //   } catch (error) {}
 // };
 // // does the updatting of refill docs
-// medicineSchema.statics.createRefillTransaction = async function (req, Model) {
+// commoditySchema.statics.createRefillTransaction = async function (req, Model) {
 //   let {
 //     refillQuantity,
 //     supplier,
@@ -148,14 +154,14 @@ medicineSchema.statics.updateUnit = myLibrary.updateUnit;
 //     return false;
 //   }
 // };
-// medicineSchema.statics.updateQuantityAdd = async function (req) {
+// commoditySchema.statics.updateQuantityAdd = async function (req) {
 //   const queryCondition = { "generic-name": new RegExp(genericName, "i") };
 //   const query = await this.findOne(queryCondition);
 
 //   return true;
 // };
 
-// medicineSchema.statics.updateExpiryDate = async function (req) {
+// commoditySchema.statics.updateExpiryDate = async function (req) {
 //   let { expiryDate } = req;
 
 //   const queryCondition = { "generic-name": genericName };
@@ -166,6 +172,6 @@ medicineSchema.statics.updateUnit = myLibrary.updateUnit;
 //   return true;
 // };
 
-const MedicineModel = mongoose.model("Medicines", medicineSchema);
+const commodityModel = mongoose.model("Commodities", commoditySchema);
 
-export default MedicineModel;
+export default commodityModel;
