@@ -20,7 +20,6 @@ const transactionSchema = new mongoose.Schema({
     {
       commodity: { type: mongoose.Schema.Types.ObjectId, ref: "Commodities" },
       quantity: Number,
-      unit: { type: mongoose.Schema.Types.ObjectId, ref: "Units" },
     },
   ],
   host: { type: mongoose.Schema.Types.ObjectId, ref: "Stores" },
@@ -31,16 +30,16 @@ const transactionSchema = new mongoose.Schema({
 
 // static methods
 // create a debug message..called jawabu
-transactionSchema.statics.jawabu = myLibrary.jawabu;
-transactionSchema.statics.create = myLibrary.createDocument;
-transactionSchema.statics.readAll = myLibrary.readAllDocuments;
-transactionSchema.statics.readAllOfKind = myLibrary.readAllDocumentsOfKind;
-transactionSchema.statics.readOne = myLibrary.readDocument;
-transactionSchema.statics.deleteAll = myLibrary.deleteAllDocuments;
-transactionSchema.statics.deleteAllOfKind = myLibrary.deleteAllDocumentsOfKind;
-transactionSchema.statics.deleteOne = myLibrary.deleteDocument;
-transactionSchema.statics.updateQuantity = myLibrary.updateQuantity;
-transactionSchema.statics.updateUnit = myLibrary.updateUnit;
+// transactionSchema.statics.jawabu = myLibrary.jawabu;
+// transactionSchema.statics.create = myLibrary.createDocument;
+// transactionSchema.statics.readAll = myLibrary.readAllDocuments;
+// transactionSchema.statics.readAllOfKind = myLibrary.readAllDocumentsOfKind;
+// transactionSchema.statics.readOne = myLibrary.readDocument;
+// transactionSchema.statics.deleteAll = myLibrary.deleteAllDocuments;
+// transactionSchema.statics.deleteAllOfKind = myLibrary.deleteAllDocumentsOfKind;
+// transactionSchema.statics.deleteOne = myLibrary.deleteDocument;
+// transactionSchema.statics.updateQuantity = myLibrary.updateQuantity;
+// transactionSchema.statics.updateUnit = myLibrary.updateUnit;
 // ends here
 // transactionSchema.statics.dispense = async function (req, Model) {
 //   const quantityUpdated = await this.updateQuantitySubtract(req);

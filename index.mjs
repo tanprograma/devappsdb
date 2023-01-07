@@ -1,5 +1,5 @@
 import dispensed from "./routes/dispensed-route.mjs";
-import medicines from "./routes/medicine-route.mjs";
+import medicines from "./routes/commodities-route.mjs";
 import units from "./routes/units-route.mjs";
 import express from "express";
 import database from "./database.mjs";

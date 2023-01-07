@@ -5,6 +5,7 @@ import requested from "./routes/requests-route.mjs";
 import commodities from "./routes/commodities-route.mjs";
 import units from "./routes/units-route.mjs";
 import stores from "./routes/stores-routes.mjs";
+import warehouses from "./routes/warehouse-route.mjs";
 import inventory from "./routes/inventory-route.mjs";
 import requests from "./routes/requests-route.mjs";
 import express from "express";
@@ -23,6 +24,7 @@ app.use("/issued", issued);
 app.use("/commodities", commodities);
 app.use("/units", units);
 app.use("/stores", stores);
+app.use("/warehouses", warehouses);
 app.use("/requests", requests);
 app.use("/inventory", inventory);
 

@@ -1,4 +1,7 @@
 import Model from "../models/transaction-model.mjs";
+import { StoreModel } from "../models/store-model.mjs";
+import CommodityModel from "../models/commodity-model.mjs";
+import InventoryModel from "../models/inventory-model.mjs";
 import database from "../database.mjs";
 import _ from "lodash";
 import express from "express";
@@ -8,22 +11,44 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 // const db = "PMS";
 // database(db);
-
+const f = async function (req, model) {
+  return req.map(async (item) => {
+    item.commodity = await model.findOne({ commodity: item.commodity });
+  });
+};
 router.post("/", async (req, res) => {
-  const product = await Model.DispensedModel.create(req.body);
-  if (!product.isSuccessful) return product.error.message;
-  const result = product.result;
-  // if (!product.isSuccessful) return product.error.message;
-  // const result = _.pick(product.result, ["type", "product", "unit", "quantity"]);
+  console.log(req.body);
 
-  res.send(result);
+  req.body.host = (
+    await StoreModel.findOne({ store: req.body.host })
+  )._id.toString();
+
+  for (let i = 0; i < req.body.commodities.length; i++) {
+    const item = (
+      await CommodityModel.findOne({
+        commodity: req.body.commodities[i].commodity,
+      })
+    )._id.toString();
+    // sets the id of commodities
+    req.body.commodities[i].commodity = item;
+    console.log(item);
+  }
+  console.log(req.body);
+  const product = await Model.DispensedModel.create(req.body);
+  // for loop that sends value to inventories
+  for (let i = 0; i < product.commodities.length; i++) {
+    // find and update One
+    const item = await InventoryModel.findOne({
+      commodity: product.commodities[i].commodity,
+    });
+    item.dispensed.push({ transaction: product._id });
+    await item.save();
+  }
+  res.send(product);
 });
 
 router.get("/", async (req, res) => {
-  const result = await Model.DispensedModel.find().populate({
-    path: "commodities",
-    populate: { path: "commodity" },
-  });
+  const result = await Model.DispensedModel.find();
 
   res.send(result);
 });

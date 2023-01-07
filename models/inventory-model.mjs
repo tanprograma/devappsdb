@@ -54,16 +54,16 @@ const inventorySchema = new mongoose.Schema({
 
 // static methods
 // create a debug message..called jawabu
-inventorySchema.statics.jawabu = myLibrary.jawabu;
-inventorySchema.statics.create = myLibrary.createDocument;
-inventorySchema.statics.readAll = myLibrary.readAllDocuments;
-inventorySchema.statics.readAllOfKind = myLibrary.readAllDocumentsOfKind;
-inventorySchema.statics.readOne = myLibrary.readDocument;
-inventorySchema.statics.deleteAll = myLibrary.deleteAllDocuments;
-inventorySchema.statics.deleteAllOfKind = myLibrary.deleteAllDocumentsOfKind;
-inventorySchema.statics.deleteOne = myLibrary.deleteDocument;
-inventorySchema.statics.updateQuantity = myLibrary.updateQuantity;
-inventorySchema.statics.updateUnit = myLibrary.updateUnit;
+// inventorySchema.statics.jawabu = myLibrary.jawabu;
+// inventorySchema.statics.create = myLibrary.createDocument;
+// inventorySchema.statics.readAll = myLibrary.readAllDocuments;
+// inventorySchema.statics.readAllOfKind = myLibrary.readAllDocumentsOfKind;
+// inventorySchema.statics.readOne = myLibrary.readDocument;
+// inventorySchema.statics.deleteAll = myLibrary.deleteAllDocuments;
+// inventorySchema.statics.deleteAllOfKind = myLibrary.deleteAllDocumentsOfKind;
+// inventorySchema.statics.deleteOne = myLibrary.deleteDocument;
+// inventorySchema.statics.updateQuantity = myLibrary.updateQuantity;
+// inventorySchema.statics.updateUnit = myLibrary.updateUnit;
 // ends here
 // inventorySchema.statics.dispense = async function (req, Model) {
 //   const quantityUpdated = await this.updateQuantitySubtract(req);

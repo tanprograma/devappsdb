@@ -18,16 +18,16 @@ const storeSchema = new mongoose.Schema({
 
 // static methods
 // create a debug message..called jawabu
-storeSchema.statics.jawabu = myLibrary.jawabu;
-storeSchema.statics.create = myLibrary.createDocument;
-storeSchema.statics.readAll = myLibrary.readAllDocuments;
-storeSchema.statics.readAllOfKind = myLibrary.readAllDocumentsOfKind;
-storeSchema.statics.readOne = myLibrary.readDocument;
-storeSchema.statics.deleteAll = myLibrary.deleteAllDocuments;
-storeSchema.statics.deleteAllOfKind = myLibrary.deleteAllDocumentsOfKind;
-storeSchema.statics.deleteOne = myLibrary.deleteDocument;
-storeSchema.statics.updateQuantity = myLibrary.updateQuantity;
-storeSchema.statics.updateUnit = myLibrary.updateUnit;
+// storeSchema.statics.jawabu = myLibrary.jawabu;
+// storeSchema.statics.create = myLibrary.createDocument;
+// storeSchema.statics.readAll = myLibrary.readAllDocuments;
+// storeSchema.statics.readAllOfKind = myLibrary.readAllDocumentsOfKind;
+// storeSchema.statics.readOne = myLibrary.readDocument;
+// storeSchema.statics.deleteAll = myLibrary.deleteAllDocuments;
+// storeSchema.statics.deleteAllOfKind = myLibrary.deleteAllDocumentsOfKind;
+// storeSchema.statics.deleteOne = myLibrary.deleteDocument;
+// storeSchema.statics.updateQuantity = myLibrary.updateQuantity;
+// storeSchema.statics.updateUnit = myLibrary.updateUnit;
 // ends here
 // storeSchema.statics.dispense = async function (req, Model) {
 //   const quantityUpdated = await this.updateQuantitySubtract(req);
@@ -166,5 +166,6 @@ storeSchema.statics.updateUnit = myLibrary.updateUnit;
 // };
 
 const StoreModel = mongoose.model("Stores", storeSchema);
+const WarehouseModel = mongoose.model("Warehouse", storeSchema);
 
-export default StoreModel;
+export { StoreModel, WarehouseModel };

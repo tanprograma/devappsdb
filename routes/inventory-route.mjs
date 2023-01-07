@@ -20,7 +20,7 @@ router.post("/create", async (req, res) => {
 });
 
 router.get("/allstores", async (req, res) => {
-  const result = await InventoryModel.find();
+  const result = await InventoryModel.find().populate({ path: "store" });
   // if (!products.isSuccessful) return products.error.message;
   // // map objects to lodash objects and send
   // const result = products.result;

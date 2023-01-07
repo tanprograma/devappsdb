@@ -1,4 +1,6 @@
 import CommodityModel from "../models/commodity-model.mjs";
+import { StoreModel, WarehouseModel } from "../models/store-model.mjs";
+import InventoryModel from "../models/inventory-model.mjs";
 import database from "../database.mjs";
 import _ from "lodash";
 import express from "express";
@@ -10,10 +12,28 @@ router.use(express.urlencoded({ extended: true }));
 // database(db);
 
 router.post("/", async (req, res) => {
-  const product = await CommodityModel.create(req.body);
-  if (!product.isSuccessful) return product.error.message;
+  const result = await CommodityModel.create({ commodity: req.body.value });
+  const stores = (await StoreModel.find()).map((store) => {
+    return store._id.toString();
+  });
+  const warehouses = (await WarehouseModel.find()).map((store) => {
+    return store._id.toString();
+  });
+  const sites = [...stores, ...warehouses];
+  // collects info about loop success
+  const log = [];
+  // creates inventory for each available store or warehouse
+  sites.forEach(async (siteID) => {
+    const r = await InventoryModel.create({
+      store: siteID,
+      commodity: result._id.toString(),
+    });
+    log.push(r);
+    console.log(`added in ${r.store}: ${result.commodity}`);
+  });
+  // if (!product.isSuccessful) return product.error.message;
   // result = _.pick(product.result, ["type", "Commodity", "unit", "quantity"]);
-  const result = product.result;
+  // const result = product.result;
   // res.header({ "Access-Control-Allow-Origin": "*" });
   res.send(result);
 });
